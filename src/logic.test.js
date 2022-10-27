@@ -107,3 +107,39 @@ test("receiveAttack increases number of missed shots when the attack is a miss",
 
     expect(gameboard1.shotsMissed).toEqual([[2, 5]]);
 });
+
+test("isEverythingSunk returns true when every ship is sunk", () => {
+    const testShip1 = Ship(5);
+    const testShip2 = Ship(4);
+    const testShip3 = Ship(3);
+    const testShip4 = Ship(3);
+    const testShip5 = Ship(2);
+
+    const gameboard1 = Gameboard();
+
+    gameboard1.placeShip(testShip1, [0, 0], "x");
+    gameboard1.placeShip(testShip2, [0, 1], "x");
+    gameboard1.placeShip(testShip3, [0, 2], "x");
+    gameboard1.placeShip(testShip4, [0, 3], "x");
+    gameboard1.placeShip(testShip5, [0, 4], "x");
+
+    gameboard1.receiveAttack([0, 0]);
+    gameboard1.receiveAttack([1, 0]);
+    gameboard1.receiveAttack([2, 0]);
+    gameboard1.receiveAttack([3, 0]);
+    gameboard1.receiveAttack([4, 0]);
+    gameboard1.receiveAttack([0, 1]);
+    gameboard1.receiveAttack([1, 1]);
+    gameboard1.receiveAttack([2, 1]);
+    gameboard1.receiveAttack([3, 1]);
+    gameboard1.receiveAttack([0, 2]);
+    gameboard1.receiveAttack([1, 2]);
+    gameboard1.receiveAttack([2, 2]);
+    gameboard1.receiveAttack([0, 3]);
+    gameboard1.receiveAttack([1, 3]);
+    gameboard1.receiveAttack([2, 3]);
+    gameboard1.receiveAttack([0, 4]);
+    gameboard1.receiveAttack([1, 4]);
+
+    expect(gameboard1.isEverythingSunk()).toBe(true);
+});

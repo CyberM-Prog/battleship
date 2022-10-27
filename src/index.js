@@ -63,7 +63,13 @@ function Gameboard() {
         this.shotsMissed.push(coordinates);
     }
 
-    function isEverythingSunk() {}
+    function isEverythingSunk() {
+        let everythingSunk = true;
+        ships.forEach((ship) => {
+            if (ship.numberOfHits < ship.length) everythingSunk = false;
+        });
+        return everythingSunk;
+    }
 
     return {
         placeShip,
