@@ -6,8 +6,8 @@ function Ship(length) {
     }
 
     function isSunk() {
-        if (this.numberOfHits >= 4) return true;
-        return false;
+        if (this.numberOfHits < this.length) return false;
+        return true;
     }
 
     return { length, numberOfHits, hit, isSunk };
@@ -66,7 +66,7 @@ function Gameboard() {
     function isEverythingSunk() {
         let everythingSunk = true;
         ships.forEach((ship) => {
-            if (ship.numberOfHits < ship.length) everythingSunk = false;
+            if (ship.isSunk() !== true) everythingSunk = false;
         });
         return everythingSunk;
     }
