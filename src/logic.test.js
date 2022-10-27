@@ -66,3 +66,44 @@ test("placeShip doesn't let to put a ship where there's another one or outside t
 
     expect(testShip2.coordinates).toBeUndefined();
 });
+
+test("receiveAttack increases number of hits in a ship when the attack is a hit", () => {
+    const testShip1 = Ship(5);
+    const testShip2 = Ship(4);
+    const testShip3 = Ship(3);
+    const testShip4 = Ship(3);
+    const testShip5 = Ship(2);
+
+    const gameboard1 = Gameboard();
+
+    gameboard1.placeShip(testShip1, [0, 0], "x");
+    gameboard1.placeShip(testShip2, [0, 1], "x");
+    gameboard1.placeShip(testShip3, [0, 2], "x");
+    gameboard1.placeShip(testShip4, [0, 3], "x");
+    gameboard1.placeShip(testShip5, [0, 4], "x");
+
+    gameboard1.receiveAttack([2, 1]);
+
+    expect(testShip2.numberOfHits).toBe(1);
+    expect(gameboard1.shotsHit).toEqual([[2, 1]]);
+});
+
+test("receiveAttack increases number of missed shots when the attack is a miss", () => {
+    const testShip1 = Ship(5);
+    const testShip2 = Ship(4);
+    const testShip3 = Ship(3);
+    const testShip4 = Ship(3);
+    const testShip5 = Ship(2);
+
+    const gameboard1 = Gameboard();
+
+    gameboard1.placeShip(testShip1, [0, 0], "x");
+    gameboard1.placeShip(testShip2, [0, 1], "x");
+    gameboard1.placeShip(testShip3, [0, 2], "x");
+    gameboard1.placeShip(testShip4, [0, 3], "x");
+    gameboard1.placeShip(testShip5, [0, 4], "x");
+
+    gameboard1.receiveAttack([2, 5]);
+
+    expect(gameboard1.shotsMissed).toEqual([[2, 5]]);
+});

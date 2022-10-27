@@ -16,6 +16,12 @@ function Ship(length) {
 function Gameboard() {
     const board = createBoard();
 
+    const ships = [];
+
+    const shotsHit = [];
+
+    const shotsMissed = [];
+
     function placeShip(ship, startCoordinate, axis) {
         ship.coordinates = [startCoordinate];
 
@@ -39,13 +45,33 @@ function Gameboard() {
             if (index === -1) return (ship.coordinates = undefined);
             else board.splice(index, 1);
         });
+
+        ships.push(ship);
     }
 
-    function receiveAttack(coordinates) {}
+    function receiveAttack(coordinates) {
+        ships.forEach((ship) =>
+            ship.coordinates.forEach((shipCoordinates) => {
+                if (shipCoordinates.toString() === coordinates.toString()) {
+                    ship.numberOfHits++;
+                    this.shotsHit.push(coordinates);
+                    return;
+                }
+            })
+        );
+
+        this.shotsMissed.push(coordinates);
+    }
 
     function isEverythingSunk() {}
 
-    return { placeShip, receiveAttack, isEverythingSunk };
+    return {
+        placeShip,
+        receiveAttack,
+        isEverythingSunk,
+        shotsHit,
+        shotsMissed,
+    };
 }
 
 function createBoard() {
