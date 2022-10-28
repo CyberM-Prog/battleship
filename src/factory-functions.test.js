@@ -1,7 +1,7 @@
-const logic = require("./index");
-const Ship = logic.Ship;
-const Gameboard = logic.Gameboard;
-const Player = logic.Player;
+import * as factories from "./factory-functions"
+const Ship = factories.Ship;
+const Gameboard = factories.Gameboard;
+const Player = factories.Player;
 
 test("Ship factory return the correct object", () =>
     expect(Ship(4)).toMatchObject({
