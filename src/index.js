@@ -91,4 +91,22 @@ function createBoard() {
     return board;
 }
 
-module.exports = { Ship, Gameboard };
+function Player(name, isComputer) {
+    const gameboard = Gameboard();
+
+    if (isComputer) {
+        const computerAttack = function () {
+            const attackCoordinates = [
+                Math.floor(Math.random() * 10),
+                Math.floor(Math.random() * 10),
+            ];
+
+            return attackCoordinates;
+        };
+        return { name, gameboard, computerAttack };
+    }
+
+    return { name, gameboard };
+}
+
+module.exports = { Ship, Gameboard, Player };

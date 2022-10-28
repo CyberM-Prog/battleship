@@ -1,6 +1,7 @@
 const logic = require("./index");
 const Ship = logic.Ship;
 const Gameboard = logic.Gameboard;
+const Player = logic.Player;
 
 test("Ship factory return the correct object", () =>
     expect(Ship(4)).toMatchObject({
@@ -142,4 +143,13 @@ test("isEverythingSunk returns true when every ship is sunk", () => {
     gameboard1.receiveAttack([1, 4]);
 
     expect(gameboard1.isEverythingSunk()).toBe(true);
+});
+
+test("computerAttack returns a pair of random coordinates", () => {
+    const player1 = Player("computer", true);
+
+    expect(player1.computerAttack()[0]).toBeGreaterThanOrEqual(0);
+    expect(player1.computerAttack()[1]).toBeGreaterThanOrEqual(0);
+    expect(player1.computerAttack()[0]).toBeLessThanOrEqual(9);
+    expect(player1.computerAttack()[1]).toBeLessThanOrEqual(9);
 });
