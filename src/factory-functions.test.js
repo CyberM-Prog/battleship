@@ -1,4 +1,4 @@
-import * as factories from "./factory-functions"
+import * as factories from "./factory-functions";
 const Ship = factories.Ship;
 const Gameboard = factories.Gameboard;
 const Player = factories.Player;

@@ -46,11 +46,11 @@ function Gameboard() {
             else board.splice(index, 1);
         });
 
-        ships.push(ship);
+        this.ships.push(ship);
     }
 
     function receiveAttack(coordinates) {
-        ships.forEach((ship) =>
+        this.ships.forEach((ship) =>
             ship.coordinates.forEach((shipCoordinates) => {
                 if (shipCoordinates.toString() === coordinates.toString()) {
                     ship.numberOfHits++;
@@ -65,7 +65,7 @@ function Gameboard() {
 
     function isEverythingSunk() {
         let everythingSunk = true;
-        ships.forEach((ship) => {
+        this.ships.forEach((ship) => {
             if (ship.isSunk() !== true) everythingSunk = false;
         });
         return everythingSunk;
@@ -77,6 +77,7 @@ function Gameboard() {
         isEverythingSunk,
         shotsHit,
         shotsMissed,
+        ships,
     };
 }
 
@@ -94,6 +95,12 @@ function createBoard() {
 function Player(name, isComputer) {
     const gameboard = Gameboard();
 
+    const carrier = Ship(5);
+    const battleship = Ship(4);
+    const destroyer = Ship(3);
+    const submarine = Ship(3);
+    const patrolBoat = Ship(2);
+
     if (isComputer) {
         const computerAttack = function () {
             const attackCoordinates = [
@@ -103,10 +110,27 @@ function Player(name, isComputer) {
 
             return attackCoordinates;
         };
-        return { name, gameboard, computerAttack };
+        return {
+            name,
+            gameboard,
+            computerAttack,
+            carrier,
+            battleship,
+            destroyer,
+            submarine,
+            patrolBoat,
+        };
     }
 
-    return { name, gameboard };
+    return {
+        name,
+        gameboard,
+        carrier,
+        battleship,
+        destroyer,
+        submarine,
+        patrolBoat,
+    };
 }
 
-export {Ship, Gameboard, Player}
+export { Ship, Gameboard, Player };
