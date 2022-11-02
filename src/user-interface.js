@@ -4,7 +4,7 @@ const main = document.createElement("div");
 main.classList.add("main");
 container.appendChild(main);
 
-function renderGameboard(ships) {
+function renderGameboard(player) {
     const board = document.createElement("div");
     board.classList.add("board");
     main.appendChild(board);
@@ -14,10 +14,20 @@ function renderGameboard(ships) {
             const square = document.createElement("div");
             square.classList.add(`${n},${i}`, "square");
 
-            ships.forEach((ship) => {
+            player.gameboard.ships.forEach((ship) => {
                 ship.coordinates.forEach((coordinate) => {
-                    if (coordinate.toString() === `${n},${i}`)
+                    if (coordinate.toString() === `${n},${i}`) {
                         square.classList.add("ship");
+                        square.addEventListener("click", function () {
+                            square.classList.remove("missed");
+                            square.classList.add("hit");
+                        });
+                    } else {
+                        square.addEventListener("click", function () {
+                            if (!square.classList.contains("hit"))
+                                square.classList.add("missed");
+                        });
+                    }
                 });
             });
 

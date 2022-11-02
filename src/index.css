@@ -46,3 +46,18 @@ body {
 .ship {
     background-color: #3e92cc;
 }
+
+.missed {
+    background-image: url("./assets/dot.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+
+.hit {
+    background-image: url("./assets/x.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 33px;
+    background-color: #fd3535;
+}
