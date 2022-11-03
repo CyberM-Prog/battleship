@@ -49,18 +49,30 @@ function Gameboard() {
         this.ships.push(ship);
     }
 
+    let attacksReceived = 0;
+
     function receiveAttack(coordinates) {
+        let result;
         this.ships.forEach((ship) =>
             ship.coordinates.forEach((shipCoordinates) => {
                 if (shipCoordinates.toString() === coordinates.toString()) {
                     ship.numberOfHits++;
                     this.shotsHit.push(coordinates);
-                    return;
+                    this.attacksReceived++;
+                    result = "hit";
                 }
             })
         );
 
+        if (result === "hit") return result;
+
         this.shotsMissed.push(coordinates);
+
+        this.attacksReceived++;
+
+        result = "missed";
+
+        return result;
     }
 
     function isEverythingSunk() {
@@ -78,6 +90,7 @@ function Gameboard() {
         shotsHit,
         shotsMissed,
         ships,
+        attacksReceived,
     };
 }
 
@@ -102,11 +115,18 @@ function Player(name, isComputer) {
     const patrolBoat = Ship(2);
 
     if (isComputer) {
+        const computerAttacks = [];
+
         const computerAttack = function () {
-            const attackCoordinates = [
+            let attackCoordinates = [
                 Math.floor(Math.random() * 10),
                 Math.floor(Math.random() * 10),
             ];
+
+            if (computerAttacks.includes(attackCoordinates.toString()))
+                attackCoordinates = computerAttack();
+
+            computerAttacks.push(attackCoordinates.toString());
 
             return attackCoordinates;
         };
@@ -119,6 +139,7 @@ function Player(name, isComputer) {
             destroyer,
             submarine,
             patrolBoat,
+            isComputer,
         };
     }
 
@@ -130,6 +151,7 @@ function Player(name, isComputer) {
         destroyer,
         submarine,
         patrolBoat,
+        isComputer,
     };
 }
 

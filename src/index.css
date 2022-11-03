@@ -61,3 +61,33 @@ body {
     background-size: 33px;
     background-color: #fd3535;
 }
+
+.disabled {
+    pointer-events: none;
+}
+
+.overlay {
+    position: absolute;
+    background-color: rgb(0, 0, 0, 0.6);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.over {
+    background-color: gainsboro;
+    height: 50vh;
+    width: 40vw;
+    border-radius: 10px;
+    border: 6px solid rgb(27, 27, 27);
+}

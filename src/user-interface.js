@@ -17,12 +17,13 @@ function renderGameboard(player) {
             player.gameboard.ships.forEach((ship) => {
                 ship.coordinates.forEach((coordinate) => {
                     if (coordinate.toString() === `${n},${i}`) {
-                        square.classList.add("ship");
-                        square.addEventListener("click", function () {
-                            square.classList.remove("missed");
-                            square.classList.add("hit");
-                        });
-                    } else {
+                        if (!player.isComputer) square.classList.add("ship");
+                        else
+                            square.addEventListener("click", function () {
+                                square.classList.remove("missed");
+                                square.classList.add("hit");
+                            });
+                    } else if (player.isComputer) {
                         square.addEventListener("click", function () {
                             if (!square.classList.contains("hit"))
                                 square.classList.add("missed");
@@ -31,9 +32,30 @@ function renderGameboard(player) {
                 });
             });
 
+            if (player.isComputer) {
+                square.addEventListener("click", function () {
+                    player.gameboard.receiveAttack([n, i]);
+                });
+            }
+
             board.appendChild(square);
         }
     }
 }
 
-export { renderGameboard };
+function addClass(coordinates, hitOrMissed) {
+    const square = document.getElementsByClassName(coordinates.toString())[0];
+    square.classList.add(hitOrMissed);
+}
+
+function gameOverScreen() {
+    const overlay = document.createElement("div");
+    overlay.classList.add("overlay");
+    container.appendChild(overlay);
+
+    const screen = document.createElement("div");
+    screen.classList.add("over");
+    overlay.appendChild(screen);
+}
+
+export { renderGameboard, addClass, gameOverScreen };
