@@ -48,7 +48,7 @@ function addClass(coordinates, hitOrMissed) {
     square.classList.add(hitOrMissed);
 }
 
-function gameOverScreen() {
+function gameOverScreen(winner) {
     const overlay = document.createElement("div");
     overlay.classList.add("overlay");
     container.appendChild(overlay);
@@ -56,6 +56,30 @@ function gameOverScreen() {
     const screen = document.createElement("div");
     screen.classList.add("over");
     overlay.appendChild(screen);
+
+    const wonOrLost = document.createElement("div");
+    wonOrLost.classList.add("wonlost");
+
+    const message = document.createElement("div");
+    message.classList.add("message");
+
+    const tryAgainBtn = document.createElement("button");
+    tryAgainBtn.classList.add("button");
+    tryAgainBtn.textContent = "Play Again";
+
+    if (winner === "player") {
+        wonOrLost.textContent = "You won!";
+        message.textContent = "Congratulations";
+        tryAgainBtn.classList.add("won");
+    } else if (winner === "computer") {
+        wonOrLost.textContent = "You lost!";
+        message.textContent = "Better luck next time";
+        tryAgainBtn.classList.add("lost");
+    }
+
+    screen.appendChild(wonOrLost);
+    screen.appendChild(message);
+    screen.appendChild(tryAgainBtn);
 }
 
 export { renderGameboard, addClass, gameOverScreen };

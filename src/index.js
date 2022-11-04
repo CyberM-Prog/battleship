@@ -46,7 +46,10 @@ squares.forEach((square) =>
                 player2.gameboard.isEverythingSunk()
             ) {
                 squares.forEach((square) => square.classList.add("disabled"));
-                userInterface.gameOverScreen();
+                if (player1.gameboard.isEverythingSunk())
+                    userInterface.gameOverScreen("computer");
+                else if (player2.gameboard.isEverythingSunk())
+                    userInterface.gameOverScreen("player");
                 return;
             }
         },
