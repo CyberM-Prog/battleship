@@ -41,6 +41,7 @@ body {
 }
 
 .square {
+    background-color: #b4d2e7;
     border: 2px solid rgb(27, 27, 27);
 }
 
@@ -69,7 +70,6 @@ body {
 
 .overlay {
     position: absolute;
-    background-color: rgb(0, 0, 0, 0.6);
     height: 100%;
     width: 100%;
     top: 0;
@@ -83,6 +83,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.darkenedbg {
+    background-color: rgb(0, 0, 0, 0.6);
 }
 
 .over {
@@ -119,4 +123,28 @@ body {
 
 .lost {
     background-color: #fd3535;
+}
+
+.placements {
+    background-color: #b4d2e7;
+    height: 90vh;
+    width: 40vw;
+    border-radius: 10px;
+    border: 6px solid rgb(27, 27, 27);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.15rem;
+}
+
+.placementtext {
+    font-size: 2.5rem;
+}
+
+.axisbtn {
+    font-size: 1.3rem;
+    background-color: #3e92cc;
+    border-radius: 5px;
+    padding: 0.5rem;
 }

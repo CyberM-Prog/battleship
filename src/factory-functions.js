@@ -1,4 +1,4 @@
-function Ship(length) {
+function Ship(length, name) {
     const numberOfHits = 0;
 
     function hit() {
@@ -10,7 +10,7 @@ function Ship(length) {
         return true;
     }
 
-    return { length, numberOfHits, hit, isSunk };
+    return { length, numberOfHits, hit, isSunk, name };
 }
 
 function Gameboard() {
@@ -108,11 +108,11 @@ function createBoard() {
 function Player(name, isComputer) {
     const gameboard = Gameboard();
 
-    const carrier = Ship(5);
-    const battleship = Ship(4);
-    const destroyer = Ship(3);
-    const submarine = Ship(3);
-    const patrolBoat = Ship(2);
+    const carrier = Ship(5, "Carrier");
+    const battleship = Ship(4, "Battleship");
+    const destroyer = Ship(3, "Destroyer");
+    const submarine = Ship(3, "Submarine");
+    const patrolBoat = Ship(2, "Patrol Boat");
 
     if (isComputer) {
         const computerAttacks = [];

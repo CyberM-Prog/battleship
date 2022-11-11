@@ -2,15 +2,15 @@ import * as factories from "./factory-functions";
 import * as userInterface from "./user-interface";
 import "./index.css";
 
-const player1 = factories.Player("John", false);
+const player1 = factories.Player("Player", false);
 
 const player2 = factories.Player("PC", true);
 
-player1.gameboard.placeShip(player1.carrier, [0, 0], "x");
-player1.gameboard.placeShip(player1.battleship, [0, 1], "x");
-player1.gameboard.placeShip(player1.destroyer, [0, 2], "x");
-player1.gameboard.placeShip(player1.submarine, [0, 3], "x");
-player1.gameboard.placeShip(player1.patrolBoat, [0, 4], "x");
+userInterface.placeShipScreen(player1.patrolBoat, player1);
+userInterface.placeShipScreen(player1.submarine, player1);
+userInterface.placeShipScreen(player1.destroyer, player1);
+userInterface.placeShipScreen(player1.battleship, player1);
+userInterface.placeShipScreen(player1.carrier, player1);
 
 player2.gameboard.placeShip(player2.carrier, [0, 0], "x");
 player2.gameboard.placeShip(player2.battleship, [0, 1], "x");
