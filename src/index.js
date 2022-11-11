@@ -12,11 +12,11 @@ userInterface.placeShipScreen(player1.destroyer, player1);
 userInterface.placeShipScreen(player1.battleship, player1);
 userInterface.placeShipScreen(player1.carrier, player1);
 
-player2.gameboard.placeShip(player2.carrier, [0, 0], "x");
-player2.gameboard.placeShip(player2.battleship, [0, 1], "x");
-player2.gameboard.placeShip(player2.destroyer, [0, 2], "x");
-player2.gameboard.placeShip(player2.submarine, [0, 3], "x");
-player2.gameboard.placeShip(player2.patrolBoat, [0, 4], "x");
+player2.gameboard.placeComputerShip(player2.carrier);
+player2.gameboard.placeComputerShip(player2.battleship);
+player2.gameboard.placeComputerShip(player2.destroyer);
+player2.gameboard.placeComputerShip(player2.submarine);
+player2.gameboard.placeComputerShip(player2.patrolBoat);
 
 userInterface.renderGameboard(player1);
 
@@ -28,6 +28,17 @@ squares.forEach((square) =>
     square.addEventListener(
         "click",
         function () {
+            if (
+                player1.gameboard.isEverythingSunk() ||
+                player2.gameboard.isEverythingSunk()
+            ) {
+                squares.forEach((square) => square.classList.add("disabled"));
+                if (player1.gameboard.isEverythingSunk())
+                    userInterface.gameOverScreen("computer");
+                else if (player2.gameboard.isEverythingSunk())
+                    userInterface.gameOverScreen("player");
+                return;
+            }
             if (
                 player2.gameboard.attacksReceived >
                 player1.gameboard.attacksReceived

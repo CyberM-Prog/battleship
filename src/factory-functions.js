@@ -42,11 +42,38 @@ function Gameboard() {
             const index = board.findIndex((element) => {
                 return element.toString() === coordinates.toString();
             });
-            if (index === -1) return (ship.coordinates = undefined);
+            if (index === -1) return (ship.coordinates = null);
             else board.splice(index, 1);
         });
 
+        if (ship.coordinates === null) return null;
+
         this.ships.push(ship);
+    }
+
+    function placeComputerShip(ship) {
+        const randomNumber = Math.floor(Math.random() * 10) + 1;
+
+        let axis;
+        if (randomNumber <= 5) axis = "x";
+        if (randomNumber >= 6) axis = "y";
+
+        let startCoordinate;
+
+        if (axis === "x") {
+            startCoordinate = [
+                Math.floor(Math.random() * 9),
+                Math.floor(Math.random() * 10),
+            ];
+        } else if (axis === "y") {
+            startCoordinate = [
+                Math.floor(Math.random() * 10),
+                Math.floor(Math.random() * 9) + 1,
+            ];
+        }
+
+        const coordinates = this.placeShip(ship, startCoordinate, axis);
+        if (coordinates === null) this.placeComputerShip(ship);
     }
 
     let attacksReceived = 0;
@@ -91,6 +118,7 @@ function Gameboard() {
         shotsMissed,
         ships,
         attacksReceived,
+        placeComputerShip,
     };
 }
 
