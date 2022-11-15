@@ -4,7 +4,7 @@ import "./index.css";
 
 const player1 = factories.Player("Player", false);
 
-const player2 = factories.Player("PC", true);
+const player2 = factories.Player("PC", true, player1);
 
 userInterface.placeShipScreen(player1.patrolBoat, player1);
 userInterface.placeShipScreen(player1.submarine, player1);

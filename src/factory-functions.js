@@ -133,7 +133,7 @@ function createBoard() {
     return board;
 }
 
-function Player(name, isComputer) {
+function Player(name, isComputer, opponent) {
     const gameboard = Gameboard();
 
     const carrier = Ship(5, "Carrier");
@@ -146,10 +146,96 @@ function Player(name, isComputer) {
         const computerAttacks = [];
 
         const computerAttack = function () {
-            let attackCoordinates = [
-                Math.floor(Math.random() * 10),
-                Math.floor(Math.random() * 10),
-            ];
+            let lastShotHit =
+                opponent.gameboard.shotsHit[
+                    opponent.gameboard.shotsHit.length - 1
+                ];
+
+            if (lastShotHit) {
+                opponent.gameboard.ships.forEach((ship) =>
+                    ship.coordinates.forEach((coordinates) => {
+                        if (
+                            lastShotHit.toString() === coordinates.toString() &&
+                            ship.isSunk()
+                        )
+                            lastShotHit = "sunk";
+                    })
+                );
+            }
+
+            let attackCoordinates;
+
+            if (lastShotHit && lastShotHit !== "sunk") {
+                if (
+                    !computerAttacks.includes(
+                        [lastShotHit[0] + 1, lastShotHit[1]].toString()
+                    )
+                ) {
+                    attackCoordinates = [lastShotHit[0] + 1, lastShotHit[1]];
+                    if (
+                        attackCoordinates[0] < 0 ||
+                        attackCoordinates[0] > 9 ||
+                        attackCoordinates[1] < 0 ||
+                        attackCoordinates[1] > 9
+                    )
+                        attackCoordinates = null;
+                }
+
+                if (
+                    !computerAttacks.includes(
+                        [lastShotHit[0] - 1, lastShotHit[1]].toString()
+                    ) &&
+                    !attackCoordinates
+                ) {
+                    attackCoordinates = [lastShotHit[0] - 1, lastShotHit[1]];
+                    if (
+                        attackCoordinates[0] < 0 ||
+                        attackCoordinates[0] > 9 ||
+                        attackCoordinates[1] < 0 ||
+                        attackCoordinates[1] > 9
+                    )
+                        attackCoordinates = null;
+                }
+
+                if (
+                    !computerAttacks.includes(
+                        [lastShotHit[0], lastShotHit[1] - 1].toString()
+                    ) &&
+                    !attackCoordinates
+                ) {
+                    attackCoordinates = [lastShotHit[0], lastShotHit[1] - 1];
+                    if (
+                        attackCoordinates[0] < 0 ||
+                        attackCoordinates[0] > 9 ||
+                        attackCoordinates[1] < 0 ||
+                        attackCoordinates[1] > 9
+                    )
+                        attackCoordinates = null;
+                }
+
+                if (
+                    !computerAttacks.includes(
+                        [lastShotHit[0], lastShotHit[1] + 1].toString()
+                    ) &&
+                    !attackCoordinates
+                ) {
+                    attackCoordinates = [lastShotHit[0], lastShotHit[1] + 1];
+                    if (
+                        attackCoordinates[0] < 0 ||
+                        attackCoordinates[0] > 9 ||
+                        attackCoordinates[1] < 0 ||
+                        attackCoordinates[1] > 9
+                    )
+                        attackCoordinates = null;
+                }
+            }
+
+            if (!attackCoordinates) {
+                attackCoordinates = [
+                    Math.floor(Math.random() * 10),
+                    Math.floor(Math.random() * 10),
+                ];
+            }
 
             if (computerAttacks.includes(attackCoordinates.toString()))
                 attackCoordinates = computerAttack();
