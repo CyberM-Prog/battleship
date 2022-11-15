@@ -28,6 +28,7 @@ squares.forEach((square) =>
     square.addEventListener(
         "click",
         function () {
+            userInterface.renderSunkShips(player2.gameboard.ships, 1);
             if (
                 player1.gameboard.isEverythingSunk() ||
                 player2.gameboard.isEverythingSunk()
@@ -51,6 +52,7 @@ squares.forEach((square) =>
                     computerAttackCoordinates,
                     attackReceived
                 );
+                userInterface.renderSunkShips(player1.gameboard.ships, 0);
             }
             if (
                 player1.gameboard.isEverythingSunk() ||

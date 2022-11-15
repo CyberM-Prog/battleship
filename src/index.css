@@ -148,3 +148,11 @@ body {
     border-radius: 5px;
     padding: 0.5rem;
 }
+
+.sunkship {
+    background-image: url("./assets/x.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 33px;
+    background-color: #b10f0f;
+}

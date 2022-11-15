@@ -51,6 +51,19 @@ function addClass(coordinates, hitOrMissed) {
     square.classList.add(hitOrMissed);
 }
 
+function renderSunkShips(ships, gameboardIndex) {
+    ships.forEach((ship) =>
+        ship.coordinates.forEach((coordinates) => {
+            if (ship.isSunk()) {
+                const square = document.getElementsByClassName(
+                    coordinates.toString()
+                )[gameboardIndex];
+                square.classList.add("sunkship");
+            }
+        })
+    );
+}
+
 function gameOverScreen(winner) {
     const overlay = document.createElement("div");
     overlay.classList.add("overlay");
@@ -69,6 +82,9 @@ function gameOverScreen(winner) {
     const tryAgainBtn = document.createElement("button");
     tryAgainBtn.classList.add("button");
     tryAgainBtn.textContent = "Play Again";
+    tryAgainBtn.addEventListener("click", function () {
+        window.location.reload();
+    });
 
     if (winner === "player") {
         wonOrLost.textContent = "You won!";
@@ -456,4 +472,10 @@ function updateGameboardRender(player, gameboardIndex = 0) {
     }
 }
 
-export { renderGameboard, addClass, gameOverScreen, placeShipScreen };
+export {
+    renderGameboard,
+    addClass,
+    gameOverScreen,
+    placeShipScreen,
+    renderSunkShips,
+};
