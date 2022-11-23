@@ -22,7 +22,17 @@ userInterface.renderGameboard(player1);
 
 userInterface.renderGameboard(player2);
 
+const computerSquares = document.querySelectorAll(".computersquare");
 const squares = document.querySelectorAll(".square");
+
+computerSquares.forEach((square) =>
+    square.addEventListener("click", function () {
+        player2.gameboard.receiveAttack([
+            +square.classList[0].charAt(0),
+            +square.classList[0].charAt(2),
+        ]);
+    })
+);
 
 squares.forEach((square) =>
     square.addEventListener(

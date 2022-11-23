@@ -104,6 +104,9 @@ function Gameboard() {
 
     function isEverythingSunk() {
         let everythingSunk = true;
+
+        if (this.ships.length === 0) everythingSunk = false;
+
         this.ships.forEach((ship) => {
             if (ship.isSunk() !== true) everythingSunk = false;
         });

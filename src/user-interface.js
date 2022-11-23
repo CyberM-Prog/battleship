@@ -14,35 +14,35 @@ function renderGameboard(player, div = main) {
             const square = document.createElement("div");
             square.classList.add(`${n},${i}`, "square");
 
-            if (player) {
-                player.gameboard.ships.forEach((ship) => {
-                    ship.coordinates.forEach((coordinate) => {
-                        if (coordinate.toString() === `${n},${i}`) {
-                            if (!player.isComputer)
-                                square.classList.add("ship");
-                            else
-                                square.addEventListener("click", function () {
-                                    square.classList.remove("missed");
-                                    square.classList.add("hit");
-                                });
-                        } else if (player.isComputer) {
-                            square.addEventListener("click", function () {
-                                if (!square.classList.contains("hit"))
-                                    square.classList.add("missed");
-                            });
-                        }
-                    });
-                });
-            }
+            if (player.isComputer)
+                square.classList.add(`${n},${i}`, "computersquare");
 
-            if (player.isComputer) {
-                square.addEventListener("click", function () {
-                    player.gameboard.receiveAttack([n, i]);
-                });
-            }
+            createSquareFunctionality(player, square, n, i);
 
             board.appendChild(square);
         }
+    }
+}
+
+function createSquareFunctionality(player, square, x, y) {
+    if (player) {
+        player.gameboard.ships.forEach((ship) => {
+            ship.coordinates.forEach((coordinate) => {
+                if (coordinate.toString() === `${x},${y}`) {
+                    if (!player.isComputer) square.classList.add("ship");
+                    else
+                        square.addEventListener("click", function () {
+                            square.classList.remove("missed");
+                            square.classList.add("hit");
+                        });
+                } else if (player.isComputer) {
+                    square.addEventListener("click", function () {
+                        if (!square.classList.contains("hit"))
+                            square.classList.add("missed");
+                    });
+                }
+            });
+        });
     }
 }
 
@@ -161,20 +161,13 @@ function placeShipScreen(ship, player) {
                     squares[index + ship.length - 1].className.charAt(2)
                 ) {
                     square.addEventListener("mouseenter", function () {
-                        let result = true;
-                        player.gameboard.ships.forEach((element) => {
-                            element.coordinates.forEach((coordinate) => {
-                                for (let i = 0; i < ship.length; i++) {
-                                    if (
-                                        coordinate.toString() ===
-                                        squares[
-                                            index + i
-                                        ].classList[0].toString()
-                                    )
-                                        result = false;
-                                }
-                            });
-                        });
+                        const result = canPlaceAShip(
+                            player,
+                            ship,
+                            squares,
+                            index
+                        );
+
                         if (result === true) {
                             for (let i = 0; i < ship.length; i++) {
                                 squares[index + i].style.backgroundColor =
@@ -190,20 +183,13 @@ function placeShipScreen(ship, player) {
                         }
                     });
                     square.addEventListener("mouseout", function () {
-                        let result = true;
-                        player.gameboard.ships.forEach((element) => {
-                            element.coordinates.forEach((coordinate) => {
-                                for (let i = 0; i < ship.length; i++) {
-                                    if (
-                                        coordinate.toString() ===
-                                        squares[
-                                            index + i
-                                        ].classList[0].toString()
-                                    )
-                                        result = false;
-                                }
-                            });
-                        });
+                        const result = canPlaceAShip(
+                            player,
+                            ship,
+                            squares,
+                            index
+                        );
+
                         if (result === true) {
                             for (let i = 0; i < ship.length; i++) {
                                 squares[index + i].style.backgroundColor =
@@ -219,20 +205,13 @@ function placeShipScreen(ship, player) {
                         }
                     });
                     square.addEventListener("click", function () {
-                        let result = true;
-                        player.gameboard.ships.forEach((element) => {
-                            element.coordinates.forEach((coordinate) => {
-                                for (let i = 0; i < ship.length; i++) {
-                                    if (
-                                        coordinate.toString() ===
-                                        squares[
-                                            index + i
-                                        ].classList[0].toString()
-                                    )
-                                        result = false;
-                                }
-                            });
-                        });
+                        const result = canPlaceAShip(
+                            player,
+                            ship,
+                            squares,
+                            index
+                        );
+
                         if (result === true) {
                             player.gameboard.placeShip(
                                 ship,
@@ -300,20 +279,14 @@ function placeShipScreen(ship, player) {
                     squares[index + 10 * (ship.length - 1)].className.charAt(0)
                 ) {
                     square.addEventListener("mouseenter", function () {
-                        let result = true;
-                        player.gameboard.ships.forEach((element) => {
-                            element.coordinates.forEach((coordinate) => {
-                                for (let i = 0; i < ship.length; i++) {
-                                    if (
-                                        coordinate.toString() ===
-                                        squares[
-                                            index + i * 10
-                                        ].classList[0].toString()
-                                    )
-                                        result = false;
-                                }
-                            });
-                        });
+                        const result = canPlaceAShip(
+                            player,
+                            ship,
+                            squares,
+                            index,
+                            "y"
+                        );
+
                         if (result === true) {
                             for (let i = 0; i < ship.length; i++) {
                                 squares[index + i * 10].style.backgroundColor =
@@ -330,20 +303,14 @@ function placeShipScreen(ship, player) {
                         }
                     });
                     square.addEventListener("mouseout", function () {
-                        let result = true;
-                        player.gameboard.ships.forEach((element) => {
-                            element.coordinates.forEach((coordinate) => {
-                                for (let i = 0; i < ship.length; i++) {
-                                    if (
-                                        coordinate.toString() ===
-                                        squares[
-                                            index + i * 10
-                                        ].classList[0].toString()
-                                    )
-                                        result = false;
-                                }
-                            });
-                        });
+                        const result = canPlaceAShip(
+                            player,
+                            ship,
+                            squares,
+                            index,
+                            "y"
+                        );
+
                         if (result === true) {
                             for (let i = 0; i < ship.length; i++) {
                                 squares[index + i * 10].style.backgroundColor =
@@ -360,20 +327,14 @@ function placeShipScreen(ship, player) {
                         }
                     });
                     square.addEventListener("click", function () {
-                        let result = true;
-                        player.gameboard.ships.forEach((element) => {
-                            element.coordinates.forEach((coordinate) => {
-                                for (let i = 0; i < ship.length; i++) {
-                                    if (
-                                        coordinate.toString() ===
-                                        squares[
-                                            index + i * 10
-                                        ].classList[0].toString()
-                                    )
-                                        result = false;
-                                }
-                            });
-                        });
+                        const result = canPlaceAShip(
+                            player,
+                            ship,
+                            squares,
+                            index,
+                            "y"
+                        );
+
                         if (result === true) {
                             player.gameboard.placeShip(
                                 ship,
@@ -435,6 +396,25 @@ function placeShipScreen(ship, player) {
     });
 }
 
+function canPlaceAShip(player, ship, squares, index, axis = "x") {
+    let result = true;
+    let multiplier;
+    if (axis === "x") multiplier = 1;
+    else if (axis === "y") multiplier = 10;
+    player.gameboard.ships.forEach((element) => {
+        element.coordinates.forEach((coordinate) => {
+            for (let i = 0; i < ship.length; i++) {
+                if (
+                    coordinate.toString() ===
+                    squares[index + i * multiplier].classList[0].toString()
+                )
+                    result = false;
+            }
+        });
+    });
+    return result;
+}
+
 function updateGameboardRender(player, gameboardIndex = 0) {
     for (let i = 9; i >= 0; i--) {
         for (let n = 0; n < 10; n++) {
@@ -442,32 +422,7 @@ function updateGameboardRender(player, gameboardIndex = 0) {
                 gameboardIndex
             ];
 
-            if (player) {
-                player.gameboard.ships.forEach((ship) => {
-                    ship.coordinates.forEach((coordinate) => {
-                        if (coordinate.toString() === `${n},${i}`) {
-                            if (!player.isComputer)
-                                square.classList.add("ship");
-                            else
-                                square.addEventListener("click", function () {
-                                    square.classList.remove("missed");
-                                    square.classList.add("hit");
-                                });
-                        } else if (player.isComputer) {
-                            square.addEventListener("click", function () {
-                                if (!square.classList.contains("hit"))
-                                    square.classList.add("missed");
-                            });
-                        }
-                    });
-                });
-            }
-
-            if (player.isComputer) {
-                square.addEventListener("click", function () {
-                    player.gameboard.receiveAttack([n, i]);
-                });
-            }
+            createSquareFunctionality(player, square, n, i);
         }
     }
 }
