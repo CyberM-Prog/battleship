@@ -65,7 +65,7 @@ test("placeShip doesn't let to put a ship where there's another one or outside t
     const testShip2 = Ship(3);
     gameboard1.placeShip(testShip2, [0, 0], "x");
 
-    expect(testShip2.coordinates).toBeUndefined();
+    expect(testShip2.coordinates).toBeNull();
 });
 
 test("receiveAttack increases number of hits in a ship when the attack is a hit", () => {
@@ -146,10 +146,12 @@ test("isEverythingSunk returns true when every ship is sunk", () => {
 });
 
 test("computerAttack returns a pair of random coordinates", () => {
-    const player1 = Player("computer", true);
+    const player1 = Player("Player", false);
 
-    expect(player1.computerAttack()[0]).toBeGreaterThanOrEqual(0);
-    expect(player1.computerAttack()[1]).toBeGreaterThanOrEqual(0);
-    expect(player1.computerAttack()[0]).toBeLessThanOrEqual(9);
-    expect(player1.computerAttack()[1]).toBeLessThanOrEqual(9);
+    const player2 = Player("PC", true, player1);
+
+    expect(player2.computerAttack()[0]).toBeGreaterThanOrEqual(0);
+    expect(player2.computerAttack()[1]).toBeGreaterThanOrEqual(0);
+    expect(player2.computerAttack()[0]).toBeLessThanOrEqual(9);
+    expect(player2.computerAttack()[1]).toBeLessThanOrEqual(9);
 });
